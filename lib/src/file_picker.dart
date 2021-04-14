@@ -68,6 +68,7 @@ abstract class FilePicker extends PlatformInterface {
     bool allowMultiple = false,
     bool? withData,
     bool? withReadStream,
+    bool? alwayDocumentation,
   }) async =>
       throw UnimplementedError('pickFiles() has not been implemented.');
 

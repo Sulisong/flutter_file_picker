@@ -32,6 +32,7 @@ class FilePickerIO extends FilePicker {
     bool allowMultiple = false,
     bool? withData = false,
     bool? withReadStream = false,
+    bool? alwayDocumentation = true,
   }) =>
       _getPath(
         type,
@@ -41,6 +42,7 @@ class FilePickerIO extends FilePicker {
         onFileLoading,
         withData,
         withReadStream,
+        alwayDocumentation,
       );
 
   @override
@@ -68,6 +70,7 @@ class FilePickerIO extends FilePicker {
     Function(FilePickerStatus)? onFileLoading,
     bool? withData,
     bool? withReadStream,
+    bool? alwayDocumentation,
   ) async {
     final String type = describeEnum(fileType);
     if (type != 'custom' && (allowedExtensions?.isNotEmpty ?? false)) {
@@ -90,6 +93,7 @@ class FilePickerIO extends FilePicker {
         'allowedExtensions': allowedExtensions,
         'allowCompression': allowCompression,
         'withData': withData,
+        'alwayDocumentation': alwayDocumentation,
       });
 
       if (result == null) {

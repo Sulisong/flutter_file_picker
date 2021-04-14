@@ -36,6 +36,7 @@ public class FilePickerDelegate implements PluginRegistry.ActivityResultListener
     private boolean loadDataToMemory = false;
     private String type;
     private String[] allowedExtensions;
+    private boolean alwayDocumentation = true;
     private EventChannel.EventSink eventSink;
 
     public FilePickerDelegate(final Activity activity) {
@@ -197,7 +198,7 @@ public class FilePickerDelegate implements PluginRegistry.ActivityResultListener
         if (type.equals("dir")) {
             intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
         } else {
-            if (type.equals("image/*") || type.equals("video/*")) {
+            if (!alwayDocumentation && (type.equals("image/*") || type.equals("video/*"))) {
                 intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             } else {
                 intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -227,7 +228,7 @@ public class FilePickerDelegate implements PluginRegistry.ActivityResultListener
     }
 
     @SuppressWarnings("deprecation")
-    public void startFileExplorer(final String type, final boolean isMultipleSelection, final boolean withData, final String[] allowedExtensions, final MethodChannel.Result result) {
+    public void startFileExplorer(final String type, final boolean isMultipleSelection, final boolean withData, final String[] allowedExtensions, final boolean alwayDocumentation, final MethodChannel.Result result) {
 
         if (!this.setPendingMethodCallAndResult(result)) {
             finishWithAlreadyActiveError(result);
@@ -238,6 +239,7 @@ public class FilePickerDelegate implements PluginRegistry.ActivityResultListener
         this.isMultipleSelection = isMultipleSelection;
         this.loadDataToMemory = withData;
         this.allowedExtensions = allowedExtensions;
+        this.alwayDocumentation = alwayDocumentation;
 
         if (!this.permissionManager.isPermissionGranted(Manifest.permission.READ_EXTERNAL_STORAGE)) {
             this.permissionManager.askForPermission(Manifest.permission.READ_EXTERNAL_STORAGE, REQUEST_CODE);

@@ -46,6 +46,8 @@ class FilePickerWeb extends FilePicker {
     bool? allowCompression,
     bool? withData = true,
     bool? withReadStream = false,
+    // ignore: non_constant_identifier_names
+    bool? alwayDocumentation,
   }) async {
     final Completer<List<PlatformFile>?> filesCompleter =
         Completer<List<PlatformFile>?>();
